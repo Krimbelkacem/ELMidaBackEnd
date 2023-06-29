@@ -132,7 +132,25 @@ const acceptReservation = asyncHandler(async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+const canceleReservation = async (req, res) => {
+  try {
+    // Find the reservation by ID
+    const reservation = await Reserve.findById(req.query.id);
 
+    if (!reservation) {
+      return res.status(404).json({ error: "Reservation not found" });
+    }
+
+    // Update the state to "canceled"
+    reservation.state = "canceled";
+    await reservation.save();
+
+    return res.json({ message: "Reservation canceled successfully" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "An error occurred" });
+  }
+};
 const sendNotification = async (title, body, userId) => {
   try {
     const user = await User.findById(userId);
@@ -156,10 +174,26 @@ const sendNotification = async (title, body, userId) => {
     throw error;
   }
 };
+///////////////////////////////////
+const getUserReservations = async (req, res) => {
+  const userId = req.query.userId;
+  console.log("userId", userId);
+  try {
+    const reservations = await Reserve.find({ user: userId })
+      .populate("Resto")
+      .exec();
+    res.json(reservations);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 module.exports = {
   rejectReservation,
   newReservation,
   removeReservation,
   acceptReservation,
+  canceleReservation,
+  getUserReservations,
 };

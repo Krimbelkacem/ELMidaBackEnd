@@ -12,7 +12,7 @@ const {
 const {
   homeLogique,
   getUserSubscribedRestaurantsPhotos,
-} = require("../controller/homeLogique");
+} = require("../controller/homelogique");
 const {
   handleNewUser,
   handlegetuser,
@@ -72,6 +72,8 @@ const {
   removeReservation,
   acceptReservation,
   rejectReservation,
+  canceleReservation,
+  getUserReservations,
 } = require("../controller/reserveController");
 const app = express();
 const fs = require("fs");
@@ -95,6 +97,9 @@ app.post("/admin-page", authAdmin);
 app.post("/newReservation", newReservation);
 app.put("/acceptReservation", acceptReservation);
 app.put("/rejectReservation", rejectReservation);
+app.put("/canceleReservation", canceleReservation);
+app.get("/getUserReservations", getUserReservations);
+
 /////////////////
 app.post("/addfollower", follow);
 app.post("/unfollow", unfollow);

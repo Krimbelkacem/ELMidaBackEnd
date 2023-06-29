@@ -56,6 +56,7 @@ io.on("connection", (socket) => {
       `Received notification from ${senderId} to ${receiverId}: ${message}`
     );
 
+    //console.log(`${senderId}`)
     // Check if the receiver is connected
     const receiverSocketId = connectedUsers[receiverId];
     if (receiverSocketId) {

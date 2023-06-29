@@ -20,8 +20,12 @@ const ReservationSchema = new Schema({
   },
   state: {
     type: String,
-    enum: ["pending", "accepted", "rejected"],
+    enum: ["pending", "accepted", "rejected", "canceled"],
     default: "pending",
+  },
+  datepost: {
+    type: Date,
+    default: Date.now,
   },
 });
 
